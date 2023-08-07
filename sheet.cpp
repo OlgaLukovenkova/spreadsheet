@@ -14,18 +14,18 @@ void Sheet::SetCell(Position pos, std::string text) {
         throw InvalidPositionException("Wrong position"s);
     }
 
-    // если €чейка существовала и текст не мен€етс€
+    // if cell exists and text is not changed
     if (IsExistedCell(pos) && text == sheet_.at(pos)->GetText()) {
         return;
     }
 
-    // если €чейка не существует, создадим пустую, чтобы затем заполнить
+    // if cell does not exist then create new one and fill it later
     if (!IsExistedCell(pos)) {
         sheet_[pos] = std::make_unique<Cell>(*this);
     }
 
     try {
-        //заполн€ем
+        // fill cell
         sheet_[pos]->Set(text);
     }
     catch (const CircularDependencyException& e) {
